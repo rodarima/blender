@@ -30,21 +30,23 @@ import mathutils
 import math
 
 ## Set specific vehicle characteristics ##
-wheel_radius = 0.5		# Radio de las ruedas
+wheel_radius = 0.65/2		# Radio de las ruedas
 wheel_wide = 1.0		# Separación entre ruedas (ancho)
-wheel_height = 0.0
+wheel_height = -0.2
 wheelFrontOffset = 1.25
 wheelBackOffset = -1.25
 #AttachHeightLocal = 0.6		#0.2
-suspensionLength = 0.1		#0.8
+suspensionLength = 0.3		#0.8
+
+mass = 50.0
 
 influence = 0.05	#0.02
 stiffness = 50.0    #20.0	Dureza del amortiguador
 damping = 5	#2.0	Suavizado de la amortiguación
-compression = 5.0	#4.0	Resistencia a la compresión
-friction = 6.0		#10.0
+compression = 10.0	#4.0	Resistencia a la compresión
+friction = 100.0		#10.0
 Stability = 0.02	#0.05
-force = 1000.0		#15.0
+force = 400.0		#15.0
 ease_steer = 0.9	#0.6
 ease_force = 0.5	#0.9
 steer_inc = 0.03	#0.05
@@ -65,6 +67,7 @@ def car_logic_init():
 	chassis = owner[CHASSIS_NAME]
 
 	logic.car = logic.scene.objects[chassis]
+	#logic.car.mass = mass
 
 	car_init()
 
@@ -93,6 +96,7 @@ def car_init():
 	
 	logic.car["cid"] = vehicle.getConstraintId()
 	vehicle = constraints.getVehicleConstraint(logic.car["cid"])
+
 
 	## initialize temporary variables ##
 	logic.car["dS"] = 0.0
@@ -173,11 +177,11 @@ def car_update():
 	s = 2 - math.pow(speed * 0.06, 1/3)
 	if s < 0.07: s = 0.07
 
-	steer_val = logic.car["steer"] * s
+	steer_val = logic.car["steer"] * 1# * s
 	print(steer_val)
 	logic.car["steer_val"] = steer_val
 	logic.car["steer_s"] = s
-	logic.car["km_h"] = velm * 3.6
+	logic.car["km_h"] = velm
 
 #	if math.fabs(logic.car["speed"])<15.0: s = 2.0
 #	elif math.fabs(logic.car["speed"])<28.0: s=1.5
