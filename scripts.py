@@ -39,21 +39,21 @@ wheel_height = scale*0.2
 wheelFrontOffset = scale*1.25
 wheelBackOffset = scale*-1.25
 #AttachHeightLocal = 0.6		#0.2
-suspensionLength = scale*0.3		#0.8
+suspensionLength = scale*0.2		#0.8
 
 mass = 50.0
 
 influence = 0.03	#0.02
-stiffness = 20.0    #20.0	Dureza del amortiguador
-damping = 5.0			#2.0	Suavizado de la amortiguación
-compression = 6.0	#4.0	Resistencia a la compresión
+stiffness = 30.0    #20.0	Dureza del amortiguador
+damping = 20.0			#2.0	Suavizado de la amortiguación
+compression = 10.0	#4.0	Resistencia a la compresión
 friction = 6.0	#8.0
 Stability = 0.02	#0.05
-force = 1500.0		#15.0
+force = 500.0		#15.0
 ease_steer = 0.9	#0.6
 ease_force = 0.5	#0.9
 steer_inc = 0.03	#0.05
-rear_force = 0.1			# Porción de fuerza aplicada atrás
+rear_force = 0.3			# Porción de fuerza aplicada atrás
 brake_force = 2
 brake_friction = friction * 0.4
 
@@ -147,6 +147,11 @@ def car_init():
 	logic.car["steer_val"] = 0.0
 	logic.car["steer_s"] = 0.0
 	logic.car["km_h"] = 0.0
+	logic.car["braking_time"] = 0.0
+	logic.car["steeringR"] = 0.0
+	logic.car["steeringL"] = 0.0
+	logic.car["steering"] = False
+	logic.car["theta"] = 0.0
 	#logic.car["time"] = time.time() - logic.car["start_time"]
 	
 	logic.car["braking"] = False
@@ -186,6 +191,70 @@ def car_init():
 def draw_vec(pos, vec):
     render.drawLine(pos, pos+vec, [1,1,1])
 
+
+def update_steer(vehicle):
+	PI = math.pi
+
+	# Configuración del giro de volante dependiendo de la velocidad
+	v0 = 0
+	theta0 = 15/360*2*PI
+	v1 = 60
+	theta1 = 5/360*2*PI
+	
+	# Tiempo que tarda en alcanzar el ángulo máximo de giro
+	ts = 0.2
+	Ki = 0.01
+
+
+	speed = math.fabs(logic.car["speed"])
+	K1 = (v1*theta1 - v0*theta0) / (theta0 - theta1)
+	K2 = (v0 + K1) * theta0
+	theta_max = K2 / (speed + K1)
+
+	print("Ángulo máximo de giro {}".format(theta_max))
+
+	Kfps = 60.0
+	steering = logic.car["steering"]
+	stR = logic.car["steeringR"]
+	stL = logic.car["steeringL"]
+	theta = logic.car["theta"]
+	tR = stR / Kfps
+	tL = stL / Kfps
+
+	stmax = ts*Kfps
+	if stR > stmax: logic.car["steeringR"] = stmax
+	if stL > stmax: logic.car["steeringL"] = stmax
+
+	Ktheta = theta_max / ts**2
+
+	if steering:
+		if stR > 0.0:
+			inc_theta = 2 * Ktheta * tR / Kfps + Ki
+			theta = max(theta - inc_theta, -theta_max)
+			#logic.car["steeringL"] = max(0, stL-1)
+			logic.car["steeringL"] = 0
+		elif stL > 0.0:
+			inc_theta = 2 * Ktheta * tL / Kfps
+			theta = min(theta + inc_theta, theta_max)
+			#logic.car["steeringR"] = max(0, stR-1)
+			logic.car["steeringR"] = 0
+	else:
+		#logic.car["steeringR"] = max(0, stR-1)
+		#logic.car["steeringL"] = max(0, stL-1)
+		logic.car["steeringR"] = 0
+		logic.car["steeringL"] = 0
+		theta *= 0.6
+
+	logic.car["theta"] = theta
+			
+
+
+	car_steer(vehicle, theta)
+
+
+	
+
+
 ## called from main car object
 ## is run once at the start of the game
 def car_update():
@@ -199,10 +268,15 @@ def car_update():
 
 	wheel_v = logic.scene.objects['w1l'].getLinearVelocity(True)
 	pos = logic.car.worldPosition
+	lpos = logic.car.localPosition
 	vel = logic.car.getLinearVelocity(False)
-	draw_vec(pos, vel)
+	#draw_vec(pos+mathutils.Vector((0,0,1)), vel)
+	draw_vec(pos+mathutils.Vector((0,0,1)), mathutils.Vector((1,0,0)))
+#	draw_vec(pos, mathutils.Vector((1,0,)))
 	#draw_vec(pos, wheel_v)
 	#print(wheel_v)
+	print(logic.car.worldOrientation.to_euler())
+	print("------------------------")
 	
 
 	if "start_time" not in logic.car:
@@ -222,13 +296,17 @@ def car_update():
 
 	## brake back wheels
 	if logic.car["braking"]:
-		car_friction(vehicle, 8, 2)
-		car_influence(vehicle, 0.06, 0.01)
+		logic.car["braking_time"] += 1
+		braking_time = logic.car["braking_time"]
+
+		car_friction(vehicle, 6, 3)
+		car_influence(vehicle, 0.03, 0.005)
 		car_power(vehicle, logic.car["force"], 0)
-		car_brake(vehicle, 0, 2)
+		car_brake(vehicle, 0, 0.5)
 	else:
-		car_friction(vehicle, 8, 10)
-		car_influence(vehicle, 0.06, 0.06)
+		logic.car["braking_time"] = 0
+		car_friction(vehicle, 6, 7)
+		car_influence(vehicle, 0.03, 0.01)
 		car_power(vehicle, logic.car["force"], logic.car["force"] * rear_force)
 		car_brake(vehicle, 0, 0)
 
@@ -255,7 +333,7 @@ def car_update():
 
 	## steer front wheels
 	#vehicle.setSteeringValue(logic.car["steer"] * s,0)
-	car_steer(vehicle, steer_val)
+	#car_steer(vehicle, steer_val)
 
 	## slowly ease off gas and center steering ##
 	logic.car["steer"] *= ease_steer
@@ -268,6 +346,7 @@ def car_update():
 	logic.car["dS"] = S
 
 	logic.car["jump"] += 0.1
+	update_steer(vehicle)
 
 
 
@@ -278,6 +357,7 @@ def key_update():
 	keys = cont.sensors["key"].events
 	#logic.car["braking"] = False
 	#print(keys)
+	logic.car["steering"] = False
 	for key in keys:
 		## up arrow
 		if key[0] == events.UPARROWKEY:
@@ -288,9 +368,13 @@ def key_update():
 		## right arrow
 		elif key[0] == events.RIGHTARROWKEY:
 			logic.car["steer"] -= steer_inc
+			logic.car["steeringR"] += 1
+			logic.car["steering"] = True
 		## left arrow
 		elif key[0] == events.LEFTARROWKEY:
 			logic.car["steer"] += steer_inc
+			logic.car["steeringL"] += 1
+			logic.car["steering"] = True
 		## Reverse
 		elif key[0] == events.RKEY:
 			if key[1] == 1:
@@ -315,6 +399,7 @@ def key_update():
 				logic.car["braking"] = True
 			elif key[1] == logic.KX_INPUT_JUST_RELEASED:
 				logic.car["braking"] = False
+	
 	
 #def on_collide():
 	#print("collide")
