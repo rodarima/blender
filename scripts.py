@@ -33,29 +33,21 @@ import time
 scale = 1
 
 ## Set specific vehicle characteristics ##
-wheel_radius = scale*0.65/2		# Radio de las ruedas
-wheel_wide = scale*1.0		# Separación entre ruedas (ancho)
-wheel_height = scale*0.2
-wheelFrontOffset = scale*1.25
-wheelBackOffset = scale*-1.25
-#AttachHeightLocal = 0.6		#0.2
-suspensionLength = scale*0.2		#0.8
+wheel_radius = 0.197/2		# Radio de las ruedas
+#tire1Radius = tireList["TireFD"].localScale[2]/2
+wheel_height = -0.05
+suspensionLength = scale*0.1		#0.8
 
 mass = 50.0
 
-influence = 0.03	#0.02
-stiffness = 30.0    #20.0	Dureza del amortiguador
-damping = 20.0			#2.0	Suavizado de la amortiguación
-compression = 10.0	#4.0	Resistencia a la compresión
-friction = 6.0	#8.0
-Stability = 0.02	#0.05
-force = 500.0		#15.0
-ease_steer = 0.9	#0.6
-ease_force = 0.5	#0.9
-steer_inc = 0.03	#0.05
-rear_force = 0.3			# Porción de fuerza aplicada atrás
-brake_force = 2
-brake_friction = friction * 0.4
+stiffness 	= 130.0    #20.0	Dureza del amortiguador
+#tire1Radius = tireList["TireFD"].localScale[2]/2
+damping 	= 3.0			#2.0	Suavizado de la amortiguación
+compression = 20.0	#4.0	Resistencia a la compresión
+
+Stability 	= 0.00	#0.05
+force 		= 200.0		#15.0
+rear_force 	= 0.2			# Porción de fuerza aplicada atrás
 
 
 CHASSIS_NAME = "car_chassis"
@@ -167,7 +159,7 @@ def car_init():
 		wheel_name = wheels[i]
 		wheel = logic.scene.objects[wheel_name]
 		wheel_pos = wheel.worldPosition
-		wheel_local = wheel_pos - car_pos - mathutils.Vector((0.0, 0.0, 0.0))#wheel_height - suspensionLength))
+		wheel_local = wheel_pos - car_pos - mathutils.Vector((0.0, 0.0, wheel_height))#wheel_height - suspensionLength))
 
 		vehicle.addWheel(
 			wheel,
@@ -179,7 +171,7 @@ def car_init():
 			wheels_engine[i])
 		
 		## set vehicle roll tendency ##
-		vehicle.setRollInfluence(influence, i)
+		#vehicle.setRollInfluence(influence, i)
 		## set vehicle suspension hardness ##
 		vehicle.setSuspensionStiffness(stiffness, i)
 		## set vehicle suspension dampness ##
@@ -188,8 +180,8 @@ def car_init():
 		vehicle.setSuspensionCompression(compression, i)
 
 
-def draw_vec(pos, vec):
-    render.drawLine(pos, pos+vec, [1,1,1])
+def draw_vec(pos, vec, color=[1,1,1]):
+    render.drawLine(pos, pos+vec, color)
 
 
 def update_steer(vehicle):
@@ -197,9 +189,9 @@ def update_steer(vehicle):
 
 	# Configuración del giro de volante dependiendo de la velocidad
 	v0 = 0
-	theta0 = 15/360*2*PI
-	v1 = 60
-	theta1 = 5/360*2*PI
+	theta0 = 20/360*2*PI
+	v1 = 100
+	theta1 = 15/360*2*PI
 	
 	# Tiempo que tarda en alcanzar el ángulo máximo de giro
 	ts = 0.2
@@ -271,12 +263,13 @@ def car_update():
 	lpos = logic.car.localPosition
 	vel = logic.car.getLinearVelocity(False)
 	#draw_vec(pos+mathutils.Vector((0,0,1)), vel)
-	draw_vec(pos+mathutils.Vector((0,0,1)), mathutils.Vector((1,0,0)))
+	#draw_vec(pos+mathutils.Vector((0,0,1)), mathutils.Vector((1,0,0)))
+	#draw_vec(pos+mathutils.Vector((0,0,1)), mathutils.Vector(rf), [1,0,0])
 #	draw_vec(pos, mathutils.Vector((1,0,)))
 	#draw_vec(pos, wheel_v)
 	#print(wheel_v)
-	print(logic.car.worldOrientation.to_euler())
-	print("------------------------")
+	#print(logic.car.worldOrientation.to_euler())
+	#print("------------------------")
 	
 
 	if "start_time" not in logic.car:
@@ -299,14 +292,14 @@ def car_update():
 		logic.car["braking_time"] += 1
 		braking_time = logic.car["braking_time"]
 
-		car_friction(vehicle, 6, 3)
-		car_influence(vehicle, 0.03, 0.005)
+		car_friction(vehicle, 2, 0.5)
+		car_influence(vehicle, 0.4, 0.08)
 		car_power(vehicle, logic.car["force"], 0)
-		car_brake(vehicle, 0, 0.5)
+		car_brake(vehicle, 0, 0.2)
 	else:
 		logic.car["braking_time"] = 0
-		car_friction(vehicle, 6, 7)
-		car_influence(vehicle, 0.03, 0.01)
+		car_friction(vehicle, 1.9, 1.8+0.3)
+		car_influence(vehicle, 0.5, 0.08)
 		car_power(vehicle, logic.car["force"], logic.car["force"] * rear_force)
 		car_brake(vehicle, 0, 0)
 
@@ -335,10 +328,6 @@ def car_update():
 	#vehicle.setSteeringValue(logic.car["steer"] * s,0)
 	#car_steer(vehicle, steer_val)
 
-	## slowly ease off gas and center steering ##
-	logic.car["steer"] *= ease_steer
-	logic.car["force"] *= ease_force
-
 	## align car to Z axis to prevent flipping ##
 	logic.car.alignAxisToVect([0.0,0.0,1.0], 2, Stability)
 	
@@ -358,6 +347,7 @@ def key_update():
 	#logic.car["braking"] = False
 	#print(keys)
 	logic.car["steering"] = False
+	logic.car["force"]  = 0
 	for key in keys:
 		## up arrow
 		if key[0] == events.UPARROWKEY:
@@ -367,12 +357,10 @@ def key_update():
 			logic.car["force"]  = force
 		## right arrow
 		elif key[0] == events.RIGHTARROWKEY:
-			logic.car["steer"] -= steer_inc
 			logic.car["steeringR"] += 1
 			logic.car["steering"] = True
 		## left arrow
 		elif key[0] == events.LEFTARROWKEY:
-			logic.car["steer"] += steer_inc
 			logic.car["steeringL"] += 1
 			logic.car["steering"] = True
 		## Reverse
@@ -411,5 +399,8 @@ def shadow():
 	pos = logic.car.worldPosition
 	cont.owner.worldPosition = [pos[0]+ownpos[0], pos[1]+ownpos[1], pos[2]+ownpos[2]]
 
+# Cuando colisiona con la meta
+def finish_line():
+	print("META!!!")
 
 
