@@ -51,6 +51,9 @@ rear_force 	= 0.2			# Porción de fuerza aplicada atrás
 
 
 CHASSIS_NAME = "car_chassis"
+START_PROP = 'start'
+HUD_SCENE = 'HUD'
+TEXT_TIME = 'text-time'
 
 def car_friction(vehicle, front=None, back=None):
 	if front != None:
@@ -100,12 +103,34 @@ def car_logic_init():
 	#logic.car.mass = mass
 
 	car_init()
+	set_start_position(logic.car)
 
 
 
 
+def set_start_position(car):
+	for obj in logic.scene.objects:
+		if START_PROP in obj:
+			print("Encontre start")
+			car.worldPosition = obj.worldPosition
+			car.worldOrientation = obj.worldOrientation
+			print(obj.worldPosition)
+			print(obj.worldOrientation)
+			return
+	
+	print("Falta la pieza de inicio")
+	#end_game()
 
+def end_game():
+	logic.endGame()
 
+def set_text_time(string):
+	scenes = logic.getSceneList()
+	for scene in scenes:
+		if scene.name == HUD_SCENE:
+			scene.objects[TEXT_TIME]['Text'] = string
+
+	#logic.scene.objects["text-time"]["Text"] = "hola!"
 
 ## This is called from the car object
 ## is run once at the start of the game
@@ -116,7 +141,8 @@ def car_init():
 	logic.scene = logic.getCurrentScene()
 	#logic.car  = cont.owner
 
-	#logic.car["start_time"] = time.time()
+
+	logic.car["start_time"] = 0
 	#print("{} - {}".format(time.time(), logic.car["start_time"]))
 
 	## setup general vehicle characteristics ##
@@ -126,6 +152,9 @@ def car_init():
 	## setup vehicle physics ##
 	vehicle = constraints.createConstraint(
 		logic.car.getPhysicsId(), 0, constraints.VEHICLE_CONSTRAINT)
+	
+
+	if(vehicle.getConstraintId() == 0): end_game()
 	
 	logic.car["cid"] = vehicle.getConstraintId()
 	vehicle = constraints.getVehicleConstraint(logic.car["cid"])
@@ -203,7 +232,7 @@ def update_steer(vehicle):
 	K2 = (v0 + K1) * theta0
 	theta_max = K2 / (speed + K1)
 
-	print("Ángulo máximo de giro {}".format(theta_max))
+	#print("Ángulo máximo de giro {}".format(theta_max))
 
 	Kfps = 60.0
 	steering = logic.car["steering"]
@@ -246,7 +275,6 @@ def update_steer(vehicle):
 
 	
 
-
 ## called from main car object
 ## is run once at the start of the game
 def car_update():
@@ -272,11 +300,15 @@ def car_update():
 	#print("------------------------")
 	
 
-	if "start_time" not in logic.car:
-		logic.car["start_time"] = time.time()*1000.0
+	if logic.car["start_time"] == 0:
+		logic.car["start_time"] = int(time.time()*1000)
 
-	logic.car["time"] = time.time()*1000.0 - logic.car["start_time"]
-	#print("{} - {}".format(time.time(), logic.car["start_time"]))
+	tiempo = int(time.time()*1000) - logic.car["start_time"]
+	cent = int(tiempo/10 % 100)
+	segundos = int(tiempo/1000)%60
+	minutos = int(tiempo/(1000*60))
+	set_text_time("{m:02d}:{s:02d}:{c:02d}".format(
+		m=minutos, s=segundos, c=cent))
 	
 
 	#f = mathutils.Vector(logic.car.getReactionForce()) * 3
@@ -292,13 +324,13 @@ def car_update():
 		logic.car["braking_time"] += 1
 		braking_time = logic.car["braking_time"]
 
-		car_friction(vehicle, 2, 0.5)
+		car_friction(vehicle, 2, 0.8)
 		car_influence(vehicle, 0.4, 0.08)
 		car_power(vehicle, logic.car["force"], 0)
-		car_brake(vehicle, 0, 0.2)
+		car_brake(vehicle, 0, 1)
 	else:
 		logic.car["braking_time"] = 0
-		car_friction(vehicle, 1.9, 1.8+0.3)
+		car_friction(vehicle, 1.9, 1.9+0.3)
 		car_influence(vehicle, 0.5, 0.08)
 		car_power(vehicle, logic.car["force"], logic.car["force"] * rear_force)
 		car_brake(vehicle, 0, 0)
@@ -402,5 +434,6 @@ def shadow():
 # Cuando colisiona con la meta
 def finish_line():
 	print("META!!!")
+	end_game()
 
 
