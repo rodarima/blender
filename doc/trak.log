@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/Arch Linux) (preloaded format=pdflatex 2015.4.23)  25 MAY 2015 01:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/Arch Linux) (preloaded format=pdflatex 2015.4.23)  25 MAY 2015 20:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -8,8 +8,8 @@ LaTeX2e <2014/05/01>
 Babel <3.9l> and hyphenation patterns for 79 languages loaded.
 (/usr/share/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
-(/usr/share/texmf-dist/tex/latex/base/size10.clo
-File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
+(/usr/share/texmf-dist/tex/latex/base/size11.clo
+File: size11.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 )
 \c@part=\count79
 \c@section=\count80
@@ -1331,12 +1331,12 @@ LaTeX Info: Redefining \% on input line 49.
 * \topmargin=-58.05495pt
 * \headheight=12.0pt
 * \headsep=25.0pt
-* \topskip=10.0pt
+* \topskip=11.0pt
 * \footskip=30.0pt
-* \marginparwidth=57.0pt
-* \marginparsep=11.0pt
+* \marginparwidth=50.0pt
+* \marginparsep=10.0pt
 * \columnsep=10.0pt
-* \skip\footins=9.0pt plus 4.0pt minus 2.0pt
+* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
 * \hoffset=0.0pt
 * \voffset=0.0pt
 * \mag=1000
@@ -1509,11 +1509,11 @@ LaTeX Font Info:    Try loading font information for OMX+lmex on input line 49.
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 49.
+(Font)              <10.95> on input line 49.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 49.
+(Font)              <8> on input line 49.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 49.
+(Font)              <6> on input line 49.
 LaTeX Font Info:    Try loading font information for OT1+lmss on input line 49.
 
 
@@ -1527,76 +1527,119 @@ LaTeX Font Info:    Try loading font information for OT1+lmtt on input line 49.
 (/usr/share/texmf-dist/tex/latex/lm/ot1lmtt.fd
 File: ot1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-<img/vehiculo-colision.png, id=59, 804.00375pt x 260.975pt>
+<img/fases.png, id=83, 301.125pt x 101.178pt>
+File: img/fases.png Graphic file (type png)
+ <use img/fases.png>
+Package pdftex.def Info: img/fases.png used on input line 82.
+(pdftex.def)             Requested size: 301.12425pt x 101.17773pt.
+ [1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./img/fases.png>]
+<img/coche.png, id=94, 963.6pt x 542.025pt>
+File: img/coche.png Graphic file (type png)
+ <use img/coche.png>
+Package pdftex.def Info: img/coche.png used on input line 112.
+(pdftex.def)             Requested size: 495.07779pt x 278.4802pt.
+
+<img/vehiculo-colision.png, id=95, 804.00375pt x 260.975pt>
 File: img/vehiculo-colision.png Graphic file (type png)
 
 <use img/vehiculo-colision.png>
-Package pdftex.def Info: img/vehiculo-colision.png used on input line 88.
+Package pdftex.def Info: img/vehiculo-colision.png used on input line 118.
 (pdftex.def)             Requested size: 495.07779pt x 160.69579pt.
- [1
-
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./img/vehiculo-colision.pn
-g>]
-LaTeX Font Info:    Try loading font information for T1+lmtt on input line 138.
+ [2 <./img/coche.png>]
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 172.
 
 
 (/usr/share/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) [2]
-<img/bloques.png, id=76, 1369.115pt x 749.80125pt>
+) [3 <./img/vehiculo-colision.png>] <img/bloques.png, id=109, 1369.115pt x 749.
+80125pt>
 File: img/bloques.png Graphic file (type png)
  <use img/bloques.png>
-Package pdftex.def Info: img/bloques.png used on input line 187.
+Package pdftex.def Info: img/bloques.png used on input line 228.
 (pdftex.def)             Requested size: 495.07779pt x 271.12955pt.
 
-[3 <./img/bloques.png (PNG copy)>]
-<img/jugador.png, id=81, 583.17876pt x 144.54pt>
+[4] <img/base.png, id=114, 784.9325pt x 517.935pt>
+File: img/base.png Graphic file (type png)
+ <use img/base.png>
+Package pdftex.def Info: img/base.png used on input line 239.
+(pdftex.def)             Requested size: 495.07779pt x 326.68011pt.
+ [5 <./img/bloques.png (PNG copy)> <./img/base.png>]
+<img/piezas.png, id=119, 1369.115pt x 667.49374pt>
+File: img/piezas.png Graphic file (type png)
+ <use img/piezas.png>
+Package pdftex.def Info: img/piezas.png used on input line 251.
+(pdftex.def)             Requested size: 495.07779pt x 241.367pt.
+
+<img/start.png, id=120, 1369.115pt x 749.80125pt>
+File: img/start.png Graphic file (type png)
+ <use img/start.png>
+Package pdftex.def Info: img/start.png used on input line 266.
+(pdftex.def)             Requested size: 495.07779pt x 271.12955pt.
+ [6 <./img/piezas.png (PNG copy)> <./img/start.png>]
+<img/end.png, id=126, 684.5575pt x 387.4475pt>
+File: img/end.png Graphic file (type png)
+ <use img/end.png>
+Package pdftex.def Info: img/end.png used on input line 273.
+(pdftex.def)             Requested size: 495.07779pt x 280.21532pt.
+
+<img/dir.png, id=127, 106.3975pt x 135.50626pt>
+File: img/dir.png Graphic file (type png)
+ <use img/dir.png>
+Package pdftex.def Info: img/dir.png used on input line 280.
+(pdftex.def)             Requested size: 85.1181pt x 108.40514pt.
+ [7 <./img/end.png (PNG copy)> <./img/dir.png (PNG copy)>]
+<img/jugador.png, id=133, 583.17876pt x 144.54pt>
 File: img/jugador.png Graphic file (type png)
  <use img/jugador.png>
-Package pdftex.def Info: img/jugador.png used on input line 236.
+Package pdftex.def Info: img/jugador.png used on input line 322.
 (pdftex.def)             Requested size: 291.58867pt x 72.2698pt.
- [4 <./img/jugador.png>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 261.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 261.
+
+<img/browse.png, id=134, 883.3pt x 521.95pt>
+File: img/browse.png Graphic file (type png)
+ <use img/browse.png>
+Package pdftex.def Info: img/browse.png used on input line 331.
+(pdftex.def)             Requested size: 495.07779pt x 292.54486pt.
+ [8 <./img/jugador.png> <./img/browse.png (PNG copy)>]
+<img/hud.png, id=139, 527.9725pt x 331.2375pt>
+File: img/hud.png Graphic file (type png)
+ <use img/hud.png>
+Package pdftex.def Info: img/hud.png used on input line 340.
+(pdftex.def)             Requested size: 263.9856pt x 165.61833pt.
+ [9 <./img/hud.png (PNG copy)>]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 370.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 370.
  (./trak.aux
 LaTeX Info: Redefining \. on input line 20.
 LaTeX Info: Redefining \% on input line 20.
 )
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 261.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 261.
-
-
-Package rerunfilecheck Warning: File `trak.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `trak.out':
-(rerunfilecheck)             Before: 93B0A2CE4061E4053F4D84AAC3BD2D34;694
-(rerunfilecheck)             After:  1398B9D439149F67D561E89562FAD3B5;759.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 261.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 370.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 370.
+Package rerunfilecheck Info: File `trak.out' has not changed.
+(rerunfilecheck)             Checksum: D9AD5477B1576347BF4E599B74A507FE;1069.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 370.
  ) 
 Here is how much of TeX's memory you used:
- 37506 strings out of 493109
- 855348 string characters out of 6140856
- 1015944 words of memory out of 5000000
- 40399 multiletter control sequences out of 15000+600000
- 55436 words of font info for 44 fonts, out of 8000000 for 9000
+ 37566 strings out of 493109
+ 856238 string characters out of 6140856
+ 1013964 words of memory out of 5000000
+ 40442 multiletter control sequences out of 15000+600000
+ 55760 words of font info for 45 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 62i,8n,77p,10371b,733s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{subsection.5.1} has been referenced but does not 
-exist, replaced by a fixed one
+ 62i,8n,77p,10371b,784s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf-dist/fo
+nts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-rm.
+enc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}</usr/share/texmf-d
+ist/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf-dist/fonts/type1/public/
+lm/lmbx12.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></usr/sha
+re/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf-dist/fonts/type
+1/public/lm/lmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
 
-{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf-dist/font
-s/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-rm.en
-c}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}</usr/share/texmf-dis
-t/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf-dist/fonts/type1/public/lm
-/lmbx12.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></usr/share
-/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf-dist/fonts/type1/
-public/lm/lmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on trak.pdf (4 pages, 204374 bytes).
+Output written on trak.pdf (9 pages, 4462771 bytes).
 PDF statistics:
- 121 PDF objects out of 1000 (max. 8388607)
- 104 compressed objects within 2 object streams
- 20 named destinations out of 1000 (max. 500000)
- 132 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 179 PDF objects out of 1000 (max. 8388607)
+ 145 compressed objects within 2 object streams
+ 29 named destinations out of 1000 (max. 500000)
+ 225 words of extra memory for PDF output out of 10000 (max. 10000000)
 

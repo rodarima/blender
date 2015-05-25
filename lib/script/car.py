@@ -44,13 +44,13 @@ suspensionLength = scale*0.1		#0.8
 
 mass = 50.0
 
-stiffness 	= 140.0    #20.0	Dureza del amortiguador
+stiffness 	= 350.0    #20.0	Dureza del amortiguador
 #tire1Radius = tireList["TireFD"].localScale[2]/2
-damping		= 0.1*2*math.sqrt(stiffness)	#2.0	Suavizado de la amortiguación
-compression = 0.7*2*math.sqrt(stiffness)	#4.0	Resistencia a la compresión
+damping		= 0.5*2*math.sqrt(stiffness)	#2.0	Suavizado de la amortiguación
+compression = 0.9*2*math.sqrt(stiffness)	#4.0	Resistencia a la compresión
 
 Stability 	= 0.00	#0.05
-force 		= 100.0		#15.0
+force 		= 200.0		#15.0
 rear_force 	= 0.3			# Porción de fuerza aplicada atrás
 
 
@@ -112,6 +112,7 @@ def car_logic_init():
 
 #	set_start_position(logic.car)
 	car_init()
+	reset_track(logic.car)
 #	set_start_position(logic.car)
 
 	print(username.Username(ROOT).get())
@@ -119,22 +120,39 @@ def car_logic_init():
 
 
 def set_start_position(car):
+	#constraints.removeConstraint(car["cid"])
 	for obj in logic.scene.objects:
 		if 'finish' in obj:
 			print("Encontre finish")
 	for obj in logic.scene.objects:
 		if START_PROP in obj:
 			print("Encontre start")
-			car.worldPosition = obj.worldPosition
+			 	
+			#car.suspendDynamics()
+			#car.restoreDynamics()
+			p = obj.worldPosition
+			car.worldPosition = [p[0], p[1], p[2]+0.3]
 			car.worldOrientation = obj.worldOrientation
-			car.setLinearVelocity([0,0,0])
-			car.setAngularVelocity([0,0,0])
+			#car.setLinearVelocity([0,0,0])
+			#car.setAngularVelocity([0,0,0])
+			car.linearVelocity = [0, 0, 0]
+			car.angularVelocity = [0, 0, 0]
+			#car.applyForce([0,0,0])
+			#car.applyTorque([0,0,0])
 			print(obj.worldPosition)
 			print(obj.worldOrientation)
 			return
 	
 	print("Falta la pieza de inicio")
 	#end_game()
+
+def reset_time(car):
+	car["start_time"] = int(time.time()*1000)
+
+def reset_track(car):
+	set_start_position(car)
+	reset_time(car)
+	#car_init()
 
 def end_game():
 	logic.endGame()
@@ -295,7 +313,23 @@ def update_steer(vehicle):
 	car_steer(vehicle, theta)
 
 
-	
+def is_braking():
+	cont = logic.getCurrentController()
+	on = cont.actuators["turn_on"]
+	off = cont.actuators["turn_off"]
+
+	try:
+		if "braking" in logic.car and logic.car["braking"]:
+			cont.activate(on)
+			cont.deactivate(off)
+
+		else:
+			cont.activate(off)
+			cont.deactivate(on)
+	except:
+		cont.activate(off)
+		cont.deactivate(on)
+		
 
 ## called from main car object
 ## is run once at the start of the game
@@ -357,13 +391,13 @@ def car_update():
 		logic.car["braking_time"] += 1
 		braking_time = logic.car["braking_time"]
 
-		car_friction(vehicle, 1.2, 0.6)
+		car_friction(vehicle, 1.0, 0.5)
 		car_influence(vehicle, 0.8, 0.7)
 		car_power(vehicle, logic.car["force"], 0)
-		car_brake(vehicle, 0, 0.7)
+		car_brake(vehicle, 0, 0.3)
 	else:
 		logic.car["braking_time"] = 0
-		car_friction(vehicle, 1.3, 1.5)
+		car_friction(vehicle, 1.5, 1.6)
 		car_influence(vehicle, 0.85, 0.6)
 		car_power(vehicle, logic.car["force"], logic.car["force"] * rear_force)
 		car_brake(vehicle, 0, 0)
@@ -402,8 +436,6 @@ def car_update():
 	logic.car["jump"] += 0.1
 	update_steer(vehicle)
 
-
-
 ## called from main car object
 def key_update():
 	#print('key update')
@@ -437,16 +469,19 @@ def key_update():
 				logic.car["steeringL"] += 1
 				logic.car["steering"] = True
 		## Reverse
-		elif key[0] == events.RKEY:
-			if key[1] == 1:
+		elif key[0] == events.BACKSPACEKEY:
+			if key[1] == logic.KX_INPUT_JUST_ACTIVATED:
+				reset_track(logic.car)
 				# re-orient car
-				if logic.car["jump"] > 0.2:
-					pos = logic.car.worldPosition
-					logic.car.position = (pos[0], pos[1], pos[2]+10.0)
-					logic.car.alignAxisToVect([0.0,0.0,1.0], 2, 1.0)
-					#logic.car.setLinearVelocity([0.0,0.0,0.0],1)
-					logic.car.setAngularVelocity([0.0,0.0,0.0],1)
-					logic.car["jump"] = 0
+				#if logic.car["jump"] > 0.2:
+				#	pos = logic.car.worldPosition
+				#	logic.car.position = (pos[0], pos[1], pos[2]+10.0)
+				#	logic.car.alignAxisToVect([0.0,0.0,1.0], 2, 1.0)
+				#	#logic.car.setLinearVelocity([0.0,0.0,0.0],1)
+				#	logic.car.setAngularVelocity([0.0,0.0,0.0],1)
+				#	logic.car["jump"] = 0
+		elif key[0] == events.BKEY:
+			game_back()
 		## Spacebar
 		#elif key[0] == events.SPACEKEY:
 		#	# hackish Brake
@@ -454,7 +489,7 @@ def key_update():
 		#		logic.car["force"]  = force
 		#	if logic.car["speed"] < -2.0:
 		#		logic.car["force"]  = -force
-		elif key[0] == events.LEFTCTRLKEY:
+		elif key[0] in (events.LEFTCTRLKEY, events.RIGHTCTRLKEY):
 			#logic.car["braking"] = True
 			if key[1] == logic.KX_INPUT_JUST_ACTIVATED:
 				logic.car["braking"] = True

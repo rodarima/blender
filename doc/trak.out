@@ -1,14 +1,19 @@
 \BOOKMARK [0][-]{part.1}{I Dise\361o art\355stico}{}% 1
 \BOOKMARK [1][-]{section.1}{Descripci\363n}{part.1}% 2
-\BOOKMARK [0][-]{part.2}{II Dise\361o interno}{}% 3
-\BOOKMARK [1][-]{section.2}{Introducci\363n}{part.2}% 4
-\BOOKMARK [1][-]{section.3}{Veh\355culo}{part.2}% 5
-\BOOKMARK [2][-]{subsection.3.1}{Estructura}{section.3}% 6
-\BOOKMARK [2][-]{subsection.3.2}{Control}{section.3}% 7
-\BOOKMARK [2][-]{subsection.3.3}{L\363gica}{section.3}% 8
-\BOOKMARK [1][-]{section.4}{Mapas}{part.2}% 9
-\BOOKMARK [1][-]{section.5}{Estructura del proyecto}{part.2}% 10
-\BOOKMARK [1][-]{section.6}{GUI}{part.2}% 11
-\BOOKMARK [2][-]{subsection.6.1}{Jugador}{section.6}% 12
-\BOOKMARK [1][-]{section.7}{HUD}{part.2}% 13
-\BOOKMARK [1][-]{section.8}{Agradecimientos}{part.2}% 14
+\BOOKMARK [1][-]{section.2}{Mapas}{part.1}% 3
+\BOOKMARK [1][-]{section.3}{Mec\341nica de juego}{part.1}% 4
+\BOOKMARK [0][-]{part.2}{II Dise\361o interno}{}% 5
+\BOOKMARK [1][-]{section.4}{Introducci\363n}{part.2}% 6
+\BOOKMARK [1][-]{section.5}{Veh\355culo}{part.2}% 7
+\BOOKMARK [2][-]{subsection.5.1}{Estructura}{section.5}% 8
+\BOOKMARK [2][-]{subsection.5.2}{Control}{section.5}% 9
+\BOOKMARK [2][-]{subsection.5.3}{L\363gica}{section.5}% 10
+\BOOKMARK [1][-]{section.6}{Mapas}{part.2}% 11
+\BOOKMARK [2][-]{subsection.6.1}{Bloques especiales}{section.6}% 12
+\BOOKMARK [1][-]{section.7}{Estructura del proyecto}{part.2}% 13
+\BOOKMARK [1][-]{section.8}{GUI}{part.2}% 14
+\BOOKMARK [2][-]{subsection.8.1}{Jugador}{section.8}% 15
+\BOOKMARK [2][-]{subsection.8.2}{Selecci\363n de mapa}{section.8}% 16
+\BOOKMARK [1][-]{section.9}{HUD}{part.2}% 17
+\BOOKMARK [1][-]{section.10}{Controles del juego}{part.2}% 18
+\BOOKMARK [1][-]{section.11}{Agradecimientos}{part.2}% 19
