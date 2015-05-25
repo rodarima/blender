@@ -480,7 +480,8 @@ def key_update():
 				#	#logic.car.setLinearVelocity([0.0,0.0,0.0],1)
 				#	logic.car.setAngularVelocity([0.0,0.0,0.0],1)
 				#	logic.car["jump"] = 0
-		elif key[0] == events.BKEY:
+		#elif key[0] == events.BKEY:
+		elif key[0] == events.ESCKEY:
 			game_back()
 		## Spacebar
 		#elif key[0] == events.SPACEKEY:
