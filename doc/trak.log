@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/Arch Linux) (preloaded format=pdflatex 2015.4.23)  25 MAY 2015 21:34
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/Arch Linux) (preloaded format=pdflatex 2015.4.23)  25 MAY 2015 21:51
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1527,7 +1527,7 @@ LaTeX Font Info:    Try loading font information for OT1+lmtt on input line 49.
 (/usr/share/texmf-dist/tex/latex/lm/ot1lmtt.fd
 File: ot1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-<img/fases.png, id=83, 301.125pt x 101.178pt>
+<img/fases.png, id=87, 301.125pt x 101.178pt>
 File: img/fases.png Graphic file (type png)
  <use img/fases.png>
 Package pdftex.def Info: img/fases.png used on input line 82.
@@ -1535,13 +1535,13 @@ Package pdftex.def Info: img/fases.png used on input line 82.
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./img/fases.png>]
-<img/coche.png, id=94, 963.6pt x 542.025pt>
+<img/coche.png, id=98, 963.6pt x 542.025pt>
 File: img/coche.png Graphic file (type png)
  <use img/coche.png>
 Package pdftex.def Info: img/coche.png used on input line 112.
 (pdftex.def)             Requested size: 495.07779pt x 278.4802pt.
 
-<img/vehiculo-colision.png, id=95, 804.00375pt x 260.975pt>
+<img/vehiculo-colision.png, id=99, 804.00375pt x 260.975pt>
 File: img/vehiculo-colision.png Graphic file (type png)
 
 <use img/vehiculo-colision.png>
@@ -1553,78 +1553,78 @@ LaTeX Font Info:    Try loading font information for T1+lmtt on input line 172.
 
 (/usr/share/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) [3 <./img/vehiculo-colision.png>] <img/bloques.png, id=109, 1369.115pt x 749.
+) [3 <./img/vehiculo-colision.png>] <img/bloques.png, id=113, 1369.115pt x 749.
 80125pt>
 File: img/bloques.png Graphic file (type png)
  <use img/bloques.png>
 Package pdftex.def Info: img/bloques.png used on input line 228.
 (pdftex.def)             Requested size: 495.07779pt x 271.12955pt.
 
-[4] <img/base.png, id=114, 784.9325pt x 517.935pt>
+[4] <img/base.png, id=118, 784.9325pt x 517.935pt>
 File: img/base.png Graphic file (type png)
  <use img/base.png>
 Package pdftex.def Info: img/base.png used on input line 239.
 (pdftex.def)             Requested size: 495.07779pt x 326.68011pt.
  [5 <./img/bloques.png (PNG copy)> <./img/base.png>]
-<img/piezas.png, id=119, 1369.115pt x 667.49374pt>
+<img/piezas.png, id=123, 1369.115pt x 667.49374pt>
 File: img/piezas.png Graphic file (type png)
  <use img/piezas.png>
 Package pdftex.def Info: img/piezas.png used on input line 251.
 (pdftex.def)             Requested size: 495.07779pt x 241.367pt.
 
-<img/start.png, id=120, 1369.115pt x 749.80125pt>
+<img/start.png, id=124, 1369.115pt x 749.80125pt>
 File: img/start.png Graphic file (type png)
  <use img/start.png>
 Package pdftex.def Info: img/start.png used on input line 266.
 (pdftex.def)             Requested size: 495.07779pt x 271.12955pt.
  [6 <./img/piezas.png (PNG copy)> <./img/start.png>]
-<img/end.png, id=126, 684.5575pt x 387.4475pt>
+<img/end.png, id=130, 684.5575pt x 387.4475pt>
 File: img/end.png Graphic file (type png)
  <use img/end.png>
 Package pdftex.def Info: img/end.png used on input line 273.
 (pdftex.def)             Requested size: 495.07779pt x 280.21532pt.
 
-<img/dir.png, id=127, 106.3975pt x 135.50626pt>
+<img/dir.png, id=131, 106.3975pt x 135.50626pt>
 File: img/dir.png Graphic file (type png)
  <use img/dir.png>
 Package pdftex.def Info: img/dir.png used on input line 280.
 (pdftex.def)             Requested size: 85.1181pt x 108.40514pt.
  [7 <./img/end.png (PNG copy)> <./img/dir.png (PNG copy)>]
-<img/jugador.png, id=133, 583.17876pt x 144.54pt>
+<img/jugador.png, id=137, 583.17876pt x 144.54pt>
 File: img/jugador.png Graphic file (type png)
  <use img/jugador.png>
 Package pdftex.def Info: img/jugador.png used on input line 322.
 (pdftex.def)             Requested size: 291.58867pt x 72.2698pt.
 
-<img/browse.png, id=134, 883.3pt x 521.95pt>
+<img/browse.png, id=138, 883.3pt x 521.95pt>
 File: img/browse.png Graphic file (type png)
  <use img/browse.png>
 Package pdftex.def Info: img/browse.png used on input line 331.
 (pdftex.def)             Requested size: 495.07779pt x 292.54486pt.
  [8 <./img/jugador.png> <./img/browse.png (PNG copy)>]
-<img/hud.png, id=139, 527.9725pt x 331.2375pt>
+<img/hud.png, id=143, 527.9725pt x 331.2375pt>
 File: img/hud.png Graphic file (type png)
  <use img/hud.png>
 Package pdftex.def Info: img/hud.png used on input line 340.
 (pdftex.def)             Requested size: 263.9856pt x 165.61833pt.
  [9 <./img/hud.png (PNG copy)>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 370.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 370.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 378.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 378.
  (./trak.aux
 LaTeX Info: Redefining \. on input line 20.
 LaTeX Info: Redefining \% on input line 20.
 )
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 370.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 370.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 378.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 378.
 Package rerunfilecheck Info: File `trak.out' has not changed.
-(rerunfilecheck)             Checksum: D9AD5477B1576347BF4E599B74A507FE;1069.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 370.
+(rerunfilecheck)             Checksum: F34B3252700B316EFFF471F5932D5E6D;1141.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 378.
  ) 
 Here is how much of TeX's memory you used:
- 37566 strings out of 493109
- 856238 string characters out of 6140856
+ 37568 strings out of 493109
+ 856260 string characters out of 6140856
  1013964 words of memory out of 5000000
- 40442 multiletter control sequences out of 15000+600000
+ 40443 multiletter control sequences out of 15000+600000
  55760 words of font info for 45 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  62i,8n,77p,10371b,784s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1636,10 +1636,10 @@ lm/lmbx12.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></usr/sha
 re/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf-dist/fonts/type
 1/public/lm/lmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
 
-Output written on trak.pdf (9 pages, 4463082 bytes).
+Output written on trak.pdf (9 pages, 4463518 bytes).
 PDF statistics:
- 179 PDF objects out of 1000 (max. 8388607)
- 145 compressed objects within 2 object streams
- 29 named destinations out of 1000 (max. 500000)
- 225 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 183 PDF objects out of 1000 (max. 8388607)
+ 149 compressed objects within 2 object streams
+ 30 named destinations out of 1000 (max. 500000)
+ 233 words of extra memory for PDF output out of 10000 (max. 10000000)
 
