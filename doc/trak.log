@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/Arch Linux) (preloaded format=pdflatex 2015.4.23)  23 MAY 2015 00:19
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/Arch Linux) (preloaded format=pdflatex 2015.4.23)  25 MAY 2015 01:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1527,7 +1527,7 @@ LaTeX Font Info:    Try loading font information for OT1+lmtt on input line 49.
 (/usr/share/texmf-dist/tex/latex/lm/ot1lmtt.fd
 File: ot1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-<img/vehiculo-colision.png, id=35, 804.00375pt x 260.975pt>
+<img/vehiculo-colision.png, id=59, 804.00375pt x 260.975pt>
 File: img/vehiculo-colision.png Graphic file (type png)
 
 <use img/vehiculo-colision.png>
@@ -1536,34 +1536,67 @@ Package pdftex.def Info: img/vehiculo-colision.png used on input line 88.
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./img/vehiculo-colision.pn
-g>] [2]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 132.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 132.
+g>]
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 138.
+
+
+(/usr/share/texmf-dist/tex/latex/lm/t1lmtt.fd
+File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
+) [2]
+<img/bloques.png, id=76, 1369.115pt x 749.80125pt>
+File: img/bloques.png Graphic file (type png)
+ <use img/bloques.png>
+Package pdftex.def Info: img/bloques.png used on input line 187.
+(pdftex.def)             Requested size: 495.07779pt x 271.12955pt.
+
+[3 <./img/bloques.png (PNG copy)>]
+<img/jugador.png, id=81, 583.17876pt x 144.54pt>
+File: img/jugador.png Graphic file (type png)
+ <use img/jugador.png>
+Package pdftex.def Info: img/jugador.png used on input line 236.
+(pdftex.def)             Requested size: 291.58867pt x 72.2698pt.
+ [4 <./img/jugador.png>]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 261.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 261.
  (./trak.aux
 LaTeX Info: Redefining \. on input line 20.
 LaTeX Info: Redefining \% on input line 20.
 )
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 132.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 132.
-Package rerunfilecheck Info: File `trak.out' has not changed.
-(rerunfilecheck)             Checksum: 22B84B7A3E4F8B53E7E189945EBDFC44;417.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 132.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 261.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 261.
+
+
+Package rerunfilecheck Warning: File `trak.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `trak.out':
+(rerunfilecheck)             Before: 93B0A2CE4061E4053F4D84AAC3BD2D34;694
+(rerunfilecheck)             After:  1398B9D439149F67D561E89562FAD3B5;759.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 261.
  ) 
 Here is how much of TeX's memory you used:
- 37442 strings out of 493109
- 854496 string characters out of 6140856
- 1012943 words of memory out of 5000000
- 40353 multiletter control sequences out of 15000+600000
- 48502 words of font info for 39 fonts, out of 8000000 for 9000
+ 37506 strings out of 493109
+ 855348 string characters out of 6140856
+ 1015944 words of memory out of 5000000
+ 40399 multiletter control sequences out of 15000+600000
+ 55436 words of font info for 44 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 62i,9n,77p,10371b,751s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}</usr/share/texmf-dist/fo
-nts/type1/public/lm/lmbx10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmb
-x12.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmr10.pfb>
-Output written on trak.pdf (2 pages, 103582 bytes).
+ 62i,8n,77p,10371b,733s stack positions out of 5000i,500n,10000p,200000b,80000s
+pdfTeX warning (dest): name{subsection.5.1} has been referenced but does not 
+exist, replaced by a fixed one
+
+{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf-dist/font
+s/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-rm.en
+c}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}</usr/share/texmf-dis
+t/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf-dist/fonts/type1/public/lm
+/lmbx12.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></usr/share
+/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf-dist/fonts/type1/
+public/lm/lmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
+Output written on trak.pdf (4 pages, 204374 bytes).
 PDF statistics:
- 66 PDF objects out of 1000 (max. 8388607)
- 57 compressed objects within 1 object stream
- 11 named destinations out of 1000 (max. 500000)
- 74 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 121 PDF objects out of 1000 (max. 8388607)
+ 104 compressed objects within 2 object streams
+ 20 named destinations out of 1000 (max. 500000)
+ 132 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -14,9 +14,11 @@ import bgui.bge_utils
 import bge
 
 import username
+import highscore
 
 FILES_PAGE = 5
 COLUMNS = 2
+BEST_COUNT = 3
 
 class BrowseLayout(bgui.bge_utils.Layout):
 	"""A layout showcasing various Bgui features"""
@@ -30,13 +32,27 @@ class BrowseLayout(bgui.bge_utils.Layout):
 		self.page = 0
 
 		self.btn_maps = []
+		self.lbl_player = []
+		self.lbl_time = []
 		for i in range(0, FILES_PAGE):
-			pos = [0.1, 1 - 0.1 - (i+1)*0.8/FILES_PAGE]
-			size = [0.8, 0.8/FILES_PAGE]
+			pos = [0.1, 1 - 0.0 - (i+1)*0.8/FILES_PAGE]
+			tpos = [pos[0]+ 0.3, pos[1] - 0.03]
+			ppos = [pos[0]+ 0.4, tpos[1]]
+
+			size = [0.8, 0.3/FILES_PAGE]
 			btn_file = bgui.FrameButton(self.win, text='Fichero'+str(i), size=size,
 				pos=pos, options = bgui.BGUI_DEFAULT)
 			btn_file.on_click = self._file_selected
+		
 			self.btn_maps.append(btn_file)
+
+			lbl_time = bgui.Label(self.win, text="TIME", pos=tpos,
+				options = bgui.BGUI_DEFAULT)
+			self.lbl_time.append(lbl_time)
+
+			lbl_player = bgui.Label(self.win, text="PLAYER", pos=ppos,
+				options = bgui.BGUI_DEFAULT)
+			self.lbl_player.append(lbl_player)
 
 		navx = .85
 		navy = .02
@@ -49,6 +65,11 @@ class BrowseLayout(bgui.bge_utils.Layout):
 		self.btn_prev = bgui.FrameButton(self.win, text='Anterior', size=[.1, .05], pos=[1-navx-.1, navy],
 			options = bgui.BGUI_DEFAULT)
 		self.btn_prev.on_click = self._prev_page
+
+		self.btn_back = bgui.FrameButton(self.win, text='Volver', size=[.1, .05], pos=[0.05, 1-0.02-.05],
+			options = bgui.BGUI_DEFAULT)
+		self.btn_back.on_click = self._back
+	
 	
 		self._draw_page()
 	
@@ -67,6 +88,9 @@ class BrowseLayout(bgui.bge_utils.Layout):
 	def _file_selected(self, w):
 		map_name = os.path.join(ROOT, PATH_MAP, w.text, MAP_NAME)
 		bge.logic.startGame("//"+map_name)
+	
+	def _back(self, w):
+		bge.logic.startGame("//../username/gui.blend")
 	
 	def _next_page(self, w):
 		self.page+=1
@@ -100,6 +124,23 @@ class BrowseLayout(bgui.bge_utils.Layout):
 			btn = self.btn_maps[i]
 			btn.text = maps[i]
 			self._btn_on(btn)
+			self._draw_best(self.lbl_player[i], self.lbl_time[i], maps[i])
+	
+	def _draw_best(self, lbl_player, lbl_time, map_path):
+		map_dir = os.path.join(ROOT, PATH_MAP, map_path)
+		H = highscore.Highscore(map_dir)
+
+		best_list = H.get_best(BEST_COUNT)
+	
+		time = ""
+		player = ""
+		for mark in best_list:
+			time += highscore.Highscore.format_millis(mark['millis']) + '\n'
+			player += mark['player'] + '\n'
+
+		lbl_player.text = player
+		lbl_time.text = time
+		
 
 
 def main(cont):

@@ -35,7 +35,32 @@ class Highscore:
 		highs.append(entry)
 		
 		self._write_file(json.dumps(highs))
+	
+	def get_best(self, n):
+		data_file = self._read_file()
+		try:
+			highs = json.loads(data_file)
+		except ValueError:
+			highs = []
+
+		highs_sort = sorted(highs, key=lambda k: k['millis']) 
+		best = highs_sort[0:n]
+		
+		return best
+
+	def format_millis(t):
+		cent = int(t/10 % 100)
+		segundos = int(t/1000)%60
+		minutos = int(t/(1000*60))
+		s = "{m:02d}:{s:02d}:{c:02d}".format(
+			m=minutos, s=segundos, c=cent)
+		return s
+
+		
 
 if __name__ == "__main__":
 	H = Highscore("")
 	H.add_score('pepe', 1000)
+	H.add_score('juan', 2000)
+	H.add_score('pedro', 3000)
+	print(H.get_best(3))

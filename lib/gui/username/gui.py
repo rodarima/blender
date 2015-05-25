@@ -33,7 +33,7 @@ class SimpleLayout(bgui.bge_utils.Layout):
 		self.input = bgui.TextInput(self.win, text=user, size=[.4, .04], pos=[0.5-0.2, 0.5-0.02],
 			input_options = bgui.BGUI_INPUT_SELECT_ALL, options = bgui.BGUI_DEFAULT)
 
-		self.lbl = bgui.Label(self.win, text="Pulsa Enter para continuar", pos=[0.5-0.2, 0.45-0.02],
+		self.lbl = bgui.Label(self.win, text="Pulsa Enter para continuar o Escape para salir.", pos=[0.5-0.2, 0.45-0.02],
 			options = bgui.BGUI_DEFAULT | bgui.BGUI_CENTERX, sub_theme='small')
 
 		self.input.activate()

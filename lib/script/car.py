@@ -32,6 +32,7 @@ import time
 import os.path
 
 import highscore
+import username
 
 scale = 1
 
@@ -43,20 +44,24 @@ suspensionLength = scale*0.1		#0.8
 
 mass = 50.0
 
-stiffness 	= 130.0    #20.0	Dureza del amortiguador
+stiffness 	= 140.0    #20.0	Dureza del amortiguador
 #tire1Radius = tireList["TireFD"].localScale[2]/2
-damping 	= 3.0			#2.0	Suavizado de la amortiguación
-compression = 20.0	#4.0	Resistencia a la compresión
+damping		= 0.1*2*math.sqrt(stiffness)	#2.0	Suavizado de la amortiguación
+compression = 0.7*2*math.sqrt(stiffness)	#4.0	Resistencia a la compresión
 
 Stability 	= 0.00	#0.05
-force 		= 200.0		#15.0
-rear_force 	= 0.2			# Porción de fuerza aplicada atrás
+force 		= 100.0		#15.0
+rear_force 	= 0.3			# Porción de fuerza aplicada atrás
 
 
 CHASSIS_NAME = "car_chassis"
 START_PROP = 'start'
 HUD_SCENE = 'HUD'
 TEXT_TIME = 'text-time'
+TEXT_FINISH = 'text-finish'
+DIR = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.abspath(os.path.join(DIR, "../.."))
+BLEND_BROWSE = os.path.abspath(os.path.join(ROOT, "lib/gui/browse/gui.blend"))
 
 def car_friction(vehicle, front=None, back=None):
 	if front != None:
@@ -105,10 +110,11 @@ def car_logic_init():
 	logic.car = logic.scene.objects[chassis]
 	#logic.car.mass = mass
 
+#	set_start_position(logic.car)
 	car_init()
-	set_start_position(logic.car)
+#	set_start_position(logic.car)
 
-	print(get_username())
+	print(username.Username(ROOT).get())
 
 
 
@@ -121,6 +127,8 @@ def set_start_position(car):
 			print("Encontre start")
 			car.worldPosition = obj.worldPosition
 			car.worldOrientation = obj.worldOrientation
+			car.setLinearVelocity([0,0,0])
+			car.setAngularVelocity([0,0,0])
 			print(obj.worldPosition)
 			print(obj.worldOrientation)
 			return
@@ -136,6 +144,12 @@ def set_text_time(string):
 	for scene in scenes:
 		if scene.name == HUD_SCENE:
 			scene.objects[TEXT_TIME]['Text'] = string
+
+def set_text_finish(string):
+	scenes = logic.getSceneList()
+	for scene in scenes:
+		if scene.name == HUD_SCENE:
+			scene.objects[TEXT_FINISH]['Text'] = string
 
 	#logic.scene.objects["text-time"]["Text"] = "hola!"
 
@@ -183,6 +197,7 @@ def car_init():
 	logic.car["time"] = 0
 	
 	logic.car["braking"] = False
+	logic.car["ended"] = False
 
 	car_pos = logic.car.worldPosition
 
@@ -310,14 +325,23 @@ def car_update():
 	if logic.car["start_time"] == 0:
 		logic.car["start_time"] = int(time.time()*1000)
 
-	tiempo = int(time.time()*1000) - logic.car["start_time"]
-	cent = int(tiempo/10 % 100)
-	segundos = int(tiempo/1000)%60
-	minutos = int(tiempo/(1000*60))
-	set_text_time("{m:02d}:{s:02d}:{c:02d}".format(
-		m=minutos, s=segundos, c=cent))
-	
-	logic.car["time"] = tiempo
+	if not logic.car["ended"]:
+		now = time.time()
+		tiempo = int(now*1000) - logic.car["start_time"]
+		cent = int(tiempo/10 % 100)
+		segundos = int(tiempo/1000)%60
+		minutos = int(tiempo/(1000*60))
+		set_text_time("{m:02d}:{s:02d}:{c:02d}".format(
+			m=minutos, s=segundos, c=cent))
+		set_text_finish("")
+		
+		logic.car["time"] = tiempo
+	else:
+		set_text_finish("META")
+		now = time.time()
+		esperado = int(now*1000 - logic.car["start_time"] - logic.car["time"])
+		if esperado > 3 * 1000:
+			game_back()
 	
 
 	#f = mathutils.Vector(logic.car.getReactionForce()) * 3
@@ -333,14 +357,14 @@ def car_update():
 		logic.car["braking_time"] += 1
 		braking_time = logic.car["braking_time"]
 
-		car_friction(vehicle, 2, 0.8)
-		car_influence(vehicle, 0.4, 0.08)
+		car_friction(vehicle, 1.2, 0.6)
+		car_influence(vehicle, 0.8, 0.7)
 		car_power(vehicle, logic.car["force"], 0)
-		car_brake(vehicle, 0, 1)
+		car_brake(vehicle, 0, 0.7)
 	else:
 		logic.car["braking_time"] = 0
-		car_friction(vehicle, 1.9, 1.9+0.3)
-		car_influence(vehicle, 0.5, 0.08)
+		car_friction(vehicle, 1.3, 1.5)
+		car_influence(vehicle, 0.85, 0.6)
 		car_power(vehicle, logic.car["force"], logic.car["force"] * rear_force)
 		car_brake(vehicle, 0, 0)
 
@@ -392,18 +416,26 @@ def key_update():
 	for key in keys:
 		## up arrow
 		if key[0] == events.UPARROWKEY:
-			logic.car["force"]  = -force
+			if key[1] in (logic.KX_INPUT_JUST_ACTIVATED, logic.KX_INPUT_ACTIVE):
+				logic.car["force"]  = -force
+			elif key[1] == logic.KX_INPUT_JUST_RELEASED:
+				logic.car["force"]  = 0
 		## down arrow
 		elif key[0] == events.DOWNARROWKEY:
-			logic.car["force"]  = force
+			if key[1] in (logic.KX_INPUT_JUST_ACTIVATED, logic.KX_INPUT_ACTIVE):
+				logic.car["force"]  = force
+			elif key[1] == logic.KX_INPUT_JUST_RELEASED:
+				logic.car["force"]  = 0
 		## right arrow
 		elif key[0] == events.RIGHTARROWKEY:
-			logic.car["steeringR"] += 1
-			logic.car["steering"] = True
+			if key[1] in (logic.KX_INPUT_JUST_ACTIVATED, logic.KX_INPUT_ACTIVE):
+				logic.car["steeringR"] += 1
+				logic.car["steering"] = True
 		## left arrow
 		elif key[0] == events.LEFTARROWKEY:
-			logic.car["steeringL"] += 1
-			logic.car["steering"] = True
+			if key[1] in (logic.KX_INPUT_JUST_ACTIVATED, logic.KX_INPUT_ACTIVE):
+				logic.car["steeringL"] += 1
+				logic.car["steering"] = True
 		## Reverse
 		elif key[0] == events.RKEY:
 			if key[1] == 1:
@@ -449,12 +481,15 @@ def get_username():
 
 # Cuando colisiona con la meta
 def finish_line():
-	print("META!!!")
-	name = get_username()
-	map_time = logic.car["time"]
-	H = highscore.Highscore(logic.expandPath("//"))
-	H.add_score(name, map_time)
-	print("{} completó en {}".format(name, map_time))
-	end_game()
+	if not logic.car["ended"]:
+		print("META!!!")
+		name = username.Username(ROOT).get()
+		map_time = logic.car["time"]
+		H = highscore.Highscore(logic.expandPath("//"))
+		H.add_score(name, map_time)
+		print("{} completó en {}".format(name, map_time))
+		logic.car["ended"] = True
 
+def game_back():
+	logic.startGame(BLEND_BROWSE)
 

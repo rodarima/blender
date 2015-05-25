@@ -57,7 +57,7 @@
 rodrigo.arias@udc.es
 \end{center}
 
-\section{Diseño artístico}
+\part{Diseño artístico}
 \section{Descripción}
 Trak es un videojuego 3D de conducción extrema. Las altas velocidades, los 
 saltos en el aire, o las pendientes perpendiculares son habituales en las 
@@ -66,13 +66,13 @@ carreras.
 Está ambientado en la serie de videojuegos TrackMania. Los aspectos de 
 conducción así como el modelo de pistas siguen el mismo estilo.
 
-\section{Diseño interno}
-\subsection{Introducción}
+\part{Diseño interno}
+\section{Introducción}
 El juego está íntegramente desarrollado en Blender, un editor de modelos 3D, que 
 incluye un motor gráfico basado en el motor de físicas Bullet.
 
-\subsection{Vehículo}
-\subsubsection{Estructura}
+\section{Vehículo}
+\subsection{Estructura}
 El vehículo está formado de una parte estética, que se mostrará en el juego, y 
 una representación más simple, empleada en las físicas.
 
@@ -87,15 +87,15 @@ carrocería.
 
 \includegraphics[width=\textwidth]{vehiculo-colision}
 
-\subsubsection{Control}
+\subsection{Control}
 El control del vehículo se realiza mediante un controlador de vehículos que 
 incluye Bullet. De esta forma se simplifica la hercúlea tarea de simular el 
 comportamiento de un coche, a una tarea compleja; la de ajustar el 
 comportamiento al de un coche real.
 
 Existen diferentes parámetros que configuran el control del vehículo.
-
-\begin{wraptable}{l}{5cm}
+En la tabla, se esquematizan los parámetros para una visión más clara.
+\begin{center}
 \begin{tabular}{ | c | l | }
 	\hline
 	\multirow{2}{*}{Fuerza}
@@ -104,8 +104,8 @@ Existen diferentes parámetros que configuran el control del vehículo.
 	\hline
 	\multirow{4}{*}{Suspensión}
 	& Rigidez \\
-	& Amortiguación \\
 	& Longitud \\
+	& Expansión \\
 	& Compresión \\
 	\hline
 	\multirow{3}{*}{Ruedas}
@@ -113,20 +113,149 @@ Existen diferentes parámetros que configuran el control del vehículo.
 	& Fricción \\
 	& Influencia \\
 	\hline
-	\multirow{3}{*}{Vehículo}
+	\multirow{5}{*}{Vehículo}
 	& Dimensiones \\
+	& Centro de masa \\
 	& Masa \\
 	& Gravedad \\
+	& Escala \\
 	\hline
 \end{tabular}
-\end{wraptable}
+\end{center}
+\begin{description}
+	\item[Fuerza de motor] Simula el efecto del motor. Valores altos 
+	provocarán una aceleración mayor.
+	\item[Fuerza de frenada] Simula el rozamiento de los frenos contra las 
+	ruedas. Valores más altos implicarán una deceleración mayor.
+	\item[Rigidez] Resistencia a la deformación de la suspensión. Es la 
+	constante del muelle, y relaciona la distancia de compresión con la 
+	fuerza aplicada.
+	\item[Longitud] Es la longitud de la suspensión. Valores más altos 
+	permitirán un recorrido mayor.
+	\item[Expansión] Controla el suavizado de la expansión de la suspensión.  
+	Valores altos expandirán la suspensión de forma más lenta.
+	Debe estar comprendido entre 0 y 1 para $K$ en 
+	$2K\sqrt{\texttt{rigidez}}$
+	\item[Compresión] Configura el suavizado de compresión de la suspensión.  
+	Mismo intervalo, $K = 0.0$ sin suavizar, $K = 1.0$ suavizado crítico. Se 
+	recomienda K entre 0.1 y 0.3. Debe ser menor que la expansión.
+	
+	\item[Radio de rueda] Cuanto mayor sea el radio mayor la velocidad pero 
+	menor el par.
+	\item[Fricción de la rueda] Determina el agarre de la rueda. Un valor 
+	más alto impedirá que la rueda se desplace horizontalmente en las 
+	curvas. Puede provocar que el vehículo vuelque.
+	\item[Influencia de la rueda] Permite disminuir el par transmitido a la 
+	rueda antes de que provoque que el coche vuelque. Valores altos 
+	disminuyen el efecto, haciendo más inestable la conducción.
+	\item[Dimensiones] La anchura del vehículo determinará su estabilidad.  
+	La longitud, su habilidad para sobrepasar obstáculos, así como el radio 
+	de giro. Y la altura, determinará la estabilidad al chocar lateralmente.
+	\item[Centro de masa] Es un punto que se comporta como toda la 
+	carrocería, en cuanto a las fuerzas aplicadas a ella se refiere. Su 
+	altura determinará la estabilidad. Valores más altos, menor estabilidad.
+	\item[Masa] Permite aumentar la inercia ante choques y reducir la 
+	aceleración.
+	\item[Gravedad] Determina la aceleración del vehículo hacia el suelo.  
+	Valores muy altos pueden provocar una simulación errática.
+	\item[Factor de escala] Es la diferencia de tamaño entre el coche del 
+	mundo real y el del juego. Es muy importante para calibrar el 
+	comportamiento en un mundo más pequeno, y aumentar así la sensación de 
+	velocidad.  Además las físicas no funcionan adecuadamente para objetos 
+	muy pequeños.
+\end{description}
 
-Fuerza del motor, fuerza de los frenos
-Rigidez
+\subsection{Lógica}
+El vehículo controla la cámara, el teclado, y contiene la programación para 
+comenzar y terminar una carrera. Esta decisión de diseño se debe a que estará 
+presente en todos los mapas, y por lo tanto, será un elemento reutilizable, y 
+aplicable a nuevos mapas.
+
+Primero el vehículo busca en la escena dos bloques especiales, que contienen las 
+propiedades de comienzo y fin de carrera. Luego se sitúa en la posición de 
+comienzo, y arranca el tiempo junto con la carrera. Para llegar a la meta, 
+comprueba la colisión con el bloque de fin de carrera.
+
+\section{Mapas}
+El juego ha sido creado con la intención de que los mapas se puedan construir de 
+una forma sencilla. Para ello, existe una colección de bloques que constituyen 
+tramos de la trazada con diferentes formas.
+
+En la figura se muestran los bloques en verde, y el circuito en naranja. Todo el 
+circuito ha sido creado a partir de la sucesiva concatenación de bloques.
+
+\includegraphics[width=\textwidth]{bloques}
+
+De esta forma, se logra elaborar un método sencillo y rápido para crear nuevas 
+pistas.
+
+Además, cada bloque de trazada está formado de la modificación de un forma base.  
+La forma base, define el perfil de la trazada, los materiales y las texturas que 
+se asignarán a cada parte de la carretera. De modo que para construir cualquier 
+pieza, basta con indicar el giro o la extrusión a la forma base, y obtener el 
+bloque deseado.
+
+Esto permite la rápida edición de bloques en grupo. Al cambiar la textura del 
+suelo en la forma base, todos los bloques que hayan sido creados a partir de 
+esta forma, se modificarán automáticamente. También es posible cambiar la forma 
+o el tamaño.
+
+Es un claro ejemplo de la herencia en el paradigma de orientación a objetos, 
+centrado en la reutilización y los cambios en el diseño.
+
+\section{Estructura del proyecto}
+Cada mapa se guarda en un fichero propio, así como en un directorio propio. En 
+el directorio de cada mapa se encuentran las puntuaciones más altas de dicha 
+pista.
+
+Los bloques están ubicados aparte de los mapas, permitiendo la edición de todos 
+los bloques en los mapas de forma automática.
+
+El vehículo se escuentra en un directorio diferente, con la idea de permitir 
+añadir nuevos vehículos en el futuro.
+
+Todos los scripts del juego están colocados en un directorio común, para 
+permitir que sean reutilizados en diferentes mapas o vehículos.
+
+\section{GUI}
+El juego dispone de varias pantallas de menús que permiten editar propiedades y 
+seleccionar los circuitos, así como mostrar las mejores puntuaciones. Gracias al 
+módulo bgui, la compleja tarea de colocar cada elemento en su sitio, se vuelve 
+más sencilla.
+
+\subsection{Jugador}
+Este menú muestra una entrada de texto que permite elegir el nombre del jugador.  
+Una vez elegido, al presionar Enter se comfirma la selección, y se muestra la 
+siguiente escena.
+
+El jugador seleccionado será el que aparecerá en las puntuaciones a medida que 
+se completen las carreras. Además, al reiniciar el juego, el jugador 
+seleccionado se sigue manteniendo permitiendo continuar con sólo pulsar Enter, o 
+cambiar de jugador.
+\begin{center}
+\includegraphics[scale=0.5]{jugador}
+\end{center}
+
+\section{HUD}
+En la pantalla de conducción se superpone un HUD (Heads-Up Display), que muestra 
+el tiempo de carrera y una notificación al llegar a la meta. Se encuentra en una 
+escena superpuesta a la visión de la cámara de conducción.
+
+Al llegar a la meta, el tiempo se detiene y se muestra la notificación de 
+llegada. Sin embargo el juego continúa durante unos segundos, permitiendo que el 
+vehículo pueda continuar su camino, y chocar si procede.
 
 
 
 
-
+\section{Agradecimientos}
+El desarrollo de este videojuego no habría sido posible sin la ayuda de:
+Kester Maddock por su aporte acerca de los diferentes parámetros de un vehículo, 
+en Bullet. A Mitchell Stokes (Moguri), por la creación de la interfaz de menus 
+que incluye el juego. A todo el equipo detrás de la biblioteca de físicas Bullet 
+que es el corazón de toda la simulación de conducción. Al de Blender, y sobre 
+todo al enorme trabajo de documentación para ofrecer un contenido más claro. A 
+Monster y Bananaft de blenderartists, que gracias a sus ejemplos y tutoriales ha 
+sido posible la construcción de todo el juego.
 
 \end{document}
