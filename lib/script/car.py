@@ -39,18 +39,18 @@ scale = 1
 ## Set specific vehicle characteristics ##
 wheel_radius = 0.197/2		# Radio de las ruedas
 #tire1Radius = tireList["TireFD"].localScale[2]/2
-wheel_height = -0.05
-suspensionLength = scale*0.1		#0.8
+suspensionLength = scale*0.06		#0.8
+wheel_height = -0.02
 
 mass = 50.0
 
-stiffness 	= 350.0    #20.0	Dureza del amortiguador
+stiffness 	= 800.0    #20.0	Dureza del amortiguador
 #tire1Radius = tireList["TireFD"].localScale[2]/2
-damping		= 0.5*2*math.sqrt(stiffness)	#2.0	Suavizado de la amortiguación
-compression = 0.9*2*math.sqrt(stiffness)	#4.0	Resistencia a la compresión
+expansion	= 1.7*2*math.sqrt(stiffness)	#2.0	Suavizado de la amortiguación
+compresion	= 0.5*2*math.sqrt(stiffness)	#4.0	Resistencia a la compresión
 
 Stability 	= 0.00	#0.05
-force 		= 200.0		#15.0
+force 		= 300.0		#15.0
 rear_force 	= 0.3			# Porción de fuerza aplicada atrás
 
 
@@ -244,9 +244,9 @@ def car_init():
 		## set vehicle suspension hardness ##
 		vehicle.setSuspensionStiffness(stiffness, i)
 		## set vehicle suspension dampness ##
-		vehicle.setSuspensionDamping(damping, i)
+		vehicle.setSuspensionDamping(expansion, i)
 		## set vehicle suspension compression ratio ##
-		vehicle.setSuspensionCompression(compression, i)
+		vehicle.setSuspensionCompression(compresion, i)
 
 
 def draw_vec(pos, vec, color=[1,1,1]):
@@ -394,11 +394,11 @@ def car_update():
 		car_friction(vehicle, 1.0, 0.5)
 		car_influence(vehicle, 0.8, 0.7)
 		car_power(vehicle, logic.car["force"], 0)
-		car_brake(vehicle, 0, 0.3)
+		car_brake(vehicle, 0, 1.5)
 	else:
 		logic.car["braking_time"] = 0
-		car_friction(vehicle, 1.5, 1.6)
-		car_influence(vehicle, 0.85, 0.6)
+		car_friction(vehicle, 1.3, 1.5)
+		car_influence(vehicle, 0.9, 0.8)
 		car_power(vehicle, logic.car["force"], logic.car["force"] * rear_force)
 		car_brake(vehicle, 0, 0)
 
