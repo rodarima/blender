@@ -42,15 +42,15 @@ wheel_radius = 0.197/2		# Radio de las ruedas
 suspensionLength = scale*0.08		#0.8
 wheel_height = -0.0
 
-mass = 50.0
+mass = 200.0
 
 stiffness 	= 200.0    #20.0	Dureza del amortiguador
 #tire1Radius = tireList["TireFD"].localScale[2]/2
 expansion	= 0.9*2*math.sqrt(stiffness)	#2.0	Suavizado de la amortiguación
-compresion	= 0.9*2*math.sqrt(stiffness)	#4.0	Resistencia a la compresión
+compresion	= 0.4*2*math.sqrt(stiffness)	#4.0	Resistencia a la compresión
 
 Stability 	= 0.00	#0.05
-force 		= 240.0		#15.0
+force 		= 300.0		#15.0
 rear_force 	= 0.3			# Porción de fuerza aplicada atrás
 
 
@@ -135,12 +135,16 @@ def set_start_position(car):
 			car.worldOrientation = obj.worldOrientation
 			#car.setLinearVelocity([0,0,0])
 			#car.setAngularVelocity([0,0,0])
-			car.linearVelocity = [0, 0, 0]
-			car.angularVelocity = [0, 0, 0]
+			#car.linearVelocity = [0, 0, 0]
+			car.worldAngularVelocity = mathutils.Vector([0, 0, 0])
+			car.localAngularVelocity = mathutils.Vector([0, 0, 0])
+			car.worldLinearVelocity = mathutils.Vector([0, 0, 0])
+			car.localLinearVelocity = mathutils.Vector([0, 0, 0])
 			#car.applyForce([0,0,0])
 			#car.applyTorque([0,0,0])
 			print(obj.worldPosition)
 			print(obj.worldOrientation)
+			print(obj.getReactionForce())
 			return
 	
 	print("Falta la pieza de inicio")
@@ -259,7 +263,7 @@ def update_steer(vehicle):
 	# Configuración del giro de volante dependiendo de la velocidad
 	v0 = 0
 	theta0 = 20/360*2*PI
-	v1 = 100
+	v1 = 150
 	theta1 = 15/360*2*PI
 	
 	# Tiempo que tarda en alcanzar el ángulo máximo de giro
@@ -391,14 +395,14 @@ def car_update():
 		logic.car["braking_time"] += 1
 		braking_time = logic.car["braking_time"]
 
-		car_friction(vehicle, 1.3, 0.3)
+		car_friction(vehicle, 1.45, 0.28)
 		car_influence(vehicle, 1, 1)
 		car_power(vehicle, logic.car["force"], 0)
-		car_brake(vehicle, 0, 1.25)
+		car_brake(vehicle, 0, 1.45)
 	else:
 		logic.car["braking_time"] = 0
-		car_friction(vehicle, 1.7, 1.8)
-		car_influence(vehicle, 0.85, 0.9)
+		car_friction(vehicle, 1.9, 2)
+		car_influence(vehicle, 0.9, 0.8)
 		car_power(vehicle, logic.car["force"], logic.car["force"] * rear_force)
 		car_brake(vehicle, 0, 0)
 
