@@ -117,8 +117,10 @@ class BrowseLayout(bgui.bge_utils.Layout):
 		if less: self._btn_on(self.btn_prev)
 		else: self._btn_off(self.btn_prev)
 
-		for m in self.btn_maps:
-			self._btn_off(m)
+		for i in range(len(self.btn_maps)):
+			self._btn_off(self.btn_maps[i])
+			self.lbl_player[i].text = ""
+			self.lbl_time[i].text = ""
 
 		for i in range(len(maps)):
 			btn = self.btn_maps[i]
